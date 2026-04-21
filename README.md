@@ -6,6 +6,12 @@ surface for seeding, simulation, inspection, and vitest assertions.
 
 No real bot token, no network, no second Telegram account.
 
+> **Status: pre-release.** The underlying Bot API emulator lives in
+> [`@emulators/telegram`](https://github.com/vercel-labs/emulate/tree/main/packages/%40emulators/telegram)
+> and is currently under review at [vercel-labs/emulate#75](https://github.com/vercel-labs/emulate/pull/75).
+> Once it lands on npm, this package publishes `0.1.0` and the install below
+> works end-to-end. Until then, the source here is the artifact.
+
 ## Install
 
 ```bash

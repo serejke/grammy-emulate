@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@emulators/core':
-        specifier: ^0.5.0-local.0
-        version: 0.5.0-local.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@emulators/telegram':
-        specifier: ^0.5.0-local.0
-        version: 0.5.0-local.0
+        specifier: ^0.4.1
+        version: 0.4.1
       '@hono/node-server':
         specifier: ^1.12.0
         version: 1.19.14(hono@4.12.14)
@@ -64,11 +64,11 @@ packages:
   '@emnapi/wasi-threads@1.2.1':
     resolution: {integrity: sha512-uTII7OYF+/Mes/MrcIOYp5yOtSMLBWSIoLPpcgwipoiKbli6k322tcoFsxoIIxPDqW01SQGAgko4EzZi2BNv2w==}
 
-  '@emulators/core@0.5.0-local.0':
-    resolution: {integrity: sha512-OQpcDVKWZXe6+t3JWJfWKA+pGzvnebJlkGMjkng5Jrm1VmAI+kak+SdYMp7qBw2zSMyKUp1qY0f466RbxfuFTw==}
+  '@emulators/core@0.4.1':
+    resolution: {integrity: sha512-83yZYfexlcmrV5X/hasJ6pw7g+77Ef8EyEI7aUUE72oVplRWiKN0leN2DPeEnLM2BAsfVbWJ9YqDCS6SuG1bIQ==}
 
-  '@emulators/telegram@0.5.0-local.0':
-    resolution: {integrity: sha512-5ltocqYO2wSIS8n2tAXEgWUcOgoZaQcu/Nf03fnWbzx4GTG3UeZx4BKX7dCNo1QgdHBlraVUs94KVKghBfFb1g==}
+  '@emulators/telegram@0.4.1':
+    resolution: {integrity: sha512-a/a9ghpDm86S70FBMIW9V6sfA7oWzGypr8hooABHzFRDW+VEbPUiIddOtKYceygAVOOuzrf6FoIJBxxo1LTfBg==}
 
   '@esbuild/aix-ppc64@0.27.7':
     resolution: {integrity: sha512-EKX3Qwmhz1eMdEJokhALr0YiD0lhQNwDqkPYyPhiSwKrh7/4KRjQc04sZ8db+5DVVnZ1LmbNDI1uAMPEUBnQPg==}
@@ -1033,14 +1033,14 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@emulators/core@0.5.0-local.0':
+  '@emulators/core@0.4.1':
     dependencies:
       hono: 4.12.14
       jose: 6.2.2
 
-  '@emulators/telegram@0.5.0-local.0':
+  '@emulators/telegram@0.4.1':
     dependencies:
-      '@emulators/core': 0.5.0-local.0
+      '@emulators/core': 0.4.1
       hono: 4.12.14
       zod: 4.3.6
 
