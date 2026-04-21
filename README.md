@@ -114,16 +114,26 @@ Boots a grammY bot against the emulator. Factory receives the token and
 `apiRoot` and returns a `Bot` with its handlers already registered.
 
 ```ts
-const mounted = await emu.mount(bot, (token, apiRoot) => {
+// polling (default)
+await emu.mount(bot, (token, apiRoot) => {
   const b = new Bot(token, { client: { apiRoot } });
-  b.command("start" /* ... */);
+  b.command("start", (ctx) => ctx.reply("hi"));
   return b;
 });
-// mounted.bot — the grammY Bot
-// mounted.stop() — stop polling (also called automatically on emu.reset())
+
+// webhook — the plugin stands up a random-port HTTP receiver, calls
+// setWebhook on the emulator pointing at it, and verifies the
+// X-Telegram-Bot-Api-Secret-Token header on every delivery.
+await emu.mount(bot, factory, { mode: "webhook", allowedUpdates: ["message"] });
 ```
 
-Polling mode only for now. Webhook mode is planned.
+Options:
+
+| Option               | Default     | Meaning                                            |
+| -------------------- | ----------- | -------------------------------------------------- |
+| `mode`               | `"polling"` | `"polling"` or `"webhook"`.                        |
+| `allowedUpdates`     | –           | Filter which update types grammy receives.         |
+| `dropPendingUpdates` | `true`      | Discard any updates queued before the bot started. |
 
 ### `emu.as(user).in(chat).*`
 
@@ -132,6 +142,11 @@ Simulate user actions.
 ```ts
 emu.as(alice).in(dm).send("/echo hello")
 emu.as(alice).in(dm).sendPhoto(bytes, { caption?, mimeType? })
+emu.as(alice).in(dm).sendVideo(bytes, { caption?, duration?, width?, height? })
+emu.as(alice).in(dm).sendAudio(bytes, { mimeType? })
+emu.as(alice).in(dm).sendVoice(bytes, { mimeType?, duration? })
+emu.as(alice).in(dm).sendAnimation(bytes, { mimeType? })
+emu.as(alice).in(dm).sendSticker(bytes, { mimeType? })
 emu.as(alice).in(dm).sendDocument(bytes, { fileName?, mimeType? })
 emu.as(alice).in(dm).edit(messageId, "new text")
 emu.as(alice).in(dm).click(messageId, "callback:data")
@@ -158,6 +173,34 @@ And:
 ```ts
 emu.inspect.callbackAnswer(callbackQueryId);
 ```
+
+### `emu.faults.*`
+
+Inject controlled failures to exercise error paths like retry logic, 429
+rate-limit handling, and 403 "blocked by user" flows.
+
+```ts
+// One-shot inject + clear
+await emu.faults.inject({
+  bot,
+  method: "sendMessage",
+  code: 429,
+  retryAfter: 2,
+  count: 1,
+});
+await emu.faults.clear();
+
+// Scoped sugar — always cleared on exit, even if the block throws
+await emu.faults.during(
+  async () => {
+    await emu.as(alice).in(dm).send("/start");
+    // Bot's sendMessage fails; bot.catch fires with a GrammyError(429).
+  },
+  { bot, method: "sendMessage", code: 429, retryAfter: 2 },
+);
+```
+
+Supported codes: `400`, `401`, `403`, `404`, `429`. `count` defaults to `1`.
 
 ### Vitest matchers (`grammy-emulate/vitest`)
 

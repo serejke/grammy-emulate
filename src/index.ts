@@ -5,7 +5,8 @@ import { startRuntime, type Runtime, type RuntimeOptions } from "./runtime.js";
 import { createSeed, type SeedApi } from "./seed.js";
 import { createSimulate, type SimulateUserApi } from "./simulate.js";
 import { createInspect, type InspectApi, type InspectChatApi } from "./inspect.js";
-import { mountBot, type MountOptions, type MountedBot } from "./mount.js";
+import { mountBot, type MountOptions, type MountedBot } from "./mount/index.js";
+import { createFaults, type FaultsApi } from "./faults.js";
 
 export type {
   TestBot,
@@ -16,9 +17,10 @@ export type {
 } from "@emulators/telegram/test";
 
 export type { SeedApi } from "./seed.js";
-export type { SimulateUserApi, SimulateChatApi } from "./simulate.js";
+export type { SimulateUserApi, SimulateChatApi, SendMediaOptions, SendMediaResult } from "./simulate.js";
 export type { InspectApi, InspectChatApi } from "./inspect.js";
-export type { MountedBot, MountOptions } from "./mount.js";
+export type { MountedBot, MountOptions, MountMode } from "./mount/index.js";
+export type { FaultsApi, FaultSpec, FaultCode } from "./faults.js";
 
 export interface Emulator {
   readonly url: string;
@@ -26,6 +28,7 @@ export interface Emulator {
   readonly seed: SeedApi;
   readonly as: (user: TestUser) => SimulateUserApi;
   readonly inspect: InspectApi;
+  readonly faults: FaultsApi;
 
   in(chat: TestChat): InspectChatApi;
   start(): Promise<void>;
@@ -67,6 +70,14 @@ export function emulator(opts: RuntimeOptions = {}): Emulator {
     };
   }
 
+  function lazyFaults(): FaultsApi {
+    return {
+      inject: (spec) => createFaults(rt().client).inject(spec),
+      clear: () => createFaults(rt().client).clear(),
+      during: (fn, spec) => createFaults(rt().client).during(fn, spec),
+    };
+  }
+
   const api: Emulator = {
     get url() {
       return rt().url;
@@ -77,6 +88,7 @@ export function emulator(opts: RuntimeOptions = {}): Emulator {
     seed: lazySeed(),
     as: (user: TestUser) => createSimulate(rt().client)(user),
     inspect: lazyInspect(),
+    faults: lazyFaults(),
     in: (chat: TestChat) => createInspect(rt().client).in(chat),
 
     async start() {

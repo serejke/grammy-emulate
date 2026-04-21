@@ -12,8 +12,8 @@ importers:
         specifier: ^0.4.1
         version: 0.4.1
       '@emulators/telegram':
-        specifier: ^0.4.1
-        version: 0.4.1
+        specifier: ^0.4.2-local.0
+        version: 0.4.2-local.0
       '@hono/node-server':
         specifier: ^1.12.0
         version: 1.19.14(hono@4.12.14)
@@ -67,8 +67,8 @@ packages:
   '@emulators/core@0.4.1':
     resolution: {integrity: sha512-83yZYfexlcmrV5X/hasJ6pw7g+77Ef8EyEI7aUUE72oVplRWiKN0leN2DPeEnLM2BAsfVbWJ9YqDCS6SuG1bIQ==}
 
-  '@emulators/telegram@0.4.1':
-    resolution: {integrity: sha512-a/a9ghpDm86S70FBMIW9V6sfA7oWzGypr8hooABHzFRDW+VEbPUiIddOtKYceygAVOOuzrf6FoIJBxxo1LTfBg==}
+  '@emulators/telegram@0.4.2-local.0':
+    resolution: {integrity: sha512-di/LLQrbfEYuTUyuNTnB6g9Lc37q09X/Fp4iO3rR0oltD3FCRtuu13UrV3tUCtvx3oc7c+n/7GJ2qe3Xv2cViA==}
 
   '@esbuild/aix-ppc64@0.27.7':
     resolution: {integrity: sha512-EKX3Qwmhz1eMdEJokhALr0YiD0lhQNwDqkPYyPhiSwKrh7/4KRjQc04sZ8db+5DVVnZ1LmbNDI1uAMPEUBnQPg==}
@@ -1038,7 +1038,7 @@ snapshots:
       hono: 4.12.14
       jose: 6.2.2
 
-  '@emulators/telegram@0.4.1':
+  '@emulators/telegram@0.4.2-local.0':
     dependencies:
       '@emulators/core': 0.4.1
       hono: 4.12.14
