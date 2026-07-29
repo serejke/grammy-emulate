@@ -8,9 +8,10 @@ No real bot token, no network, no second Telegram account.
 
 > **Status: pre-release.** The underlying Bot API emulator lives in
 > [`@emulators/telegram`](https://github.com/vercel-labs/emulate/tree/main/packages/%40emulators/telegram)
-> and is currently under review at [vercel-labs/emulate#75](https://github.com/vercel-labs/emulate/pull/75).
-> Once it lands on npm, this package publishes `0.1.0` and the install below
-> works end-to-end. Until then, the source here is the artifact.
+> and is still awaiting review at [vercel-labs/emulate#75](https://github.com/vercel-labs/emulate/pull/75),
+> so it is not on npm yet. This package targets `@emulators/telegram ^0.9.0`
+> and is verified against that build; once the upstream PR lands, the install
+> below works end-to-end. Until then, the source here is the artifact.
 
 ## Install
 
@@ -214,8 +215,8 @@ expect(answer).toHaveAnsweredCallback();
 ## Showcase
 
 See [`examples/echo-bot`](./examples/echo-bot) for a production-shaped grammY
-bot with 8 end-to-end tests and a before/after comparison against
-transformer-mock style.
+bot with 22 end-to-end tests across polling, webhook delivery, media kinds, and
+fault injection — plus a before/after comparison against transformer-mock style.
 
 ```bash
 pnpm install

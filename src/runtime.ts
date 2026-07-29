@@ -1,7 +1,6 @@
-import { createServer, type Store } from "@emulators/core";
+import { createServer, serve, type Store } from "@emulators/core";
 import telegramPlugin, { seedFromConfig, type TelegramSeedConfig } from "@emulators/telegram";
 import { createTelegramTestClient, type TelegramTestClient } from "@emulators/telegram/test";
-import { serve } from "@hono/node-server";
 
 export interface RuntimeOptions {
   port?: number;
